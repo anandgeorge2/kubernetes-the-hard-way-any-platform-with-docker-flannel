@@ -1,54 +1,28 @@
 # Prerequisites
 
-## Google Cloud Platform
 
-This tutorial leverages the [Google Cloud Platform](https://cloud.google.com/) to streamline provisioning of the compute infrastructure required to bootstrap a Kubernetes cluster from the ground up. [Sign up](https://cloud.google.com/free/) for $300 in free credits.
+## Machines and network requrements.
 
-[Estimated cost](https://cloud.google.com/products/calculator/#id=55663256-c384-449c-9306-e39893e23afb) to run this tutorial: $0.23 per hour ($5.46 per day).
 
-> The compute resources required for this tutorial exceed the Google Cloud Platform free tier.
+This tutorial uses 6 machines ( not including the load balancer and the client ) which can run Ubuntu 18.x.x. These machines should be routable to each other with no firewalls in between, although it is fine all these machines are behind a firewall. Another requirement we have for these machines is that they should connect to the Internet, as there will be binary downloads from GitHub and container images pulls from docker hub etc to these machines.
 
-## Google Cloud Platform SDK
+Below are the details of the machines which has been used to prepare this document. Please note below are not requirements but feel free to change as and what fits in your specific case.
 
-### Install the Google Cloud SDK
+hostname=controller1, ip address=10.0.0.32
+hostname=controller2, ip address=10.0.0.22
+hostname=controller3, ip address=10.0.0.29
+hostname=worker1, ip address=10.0.0.25
+hostname=worker2, ip address=10.0.0.30
+hostname=worker3, ip address=10.0.0.27
+hostname=LB1, ip address=10.0.0.26
+hostname=client1, ip address=10.0.0.23
 
-Follow the Google Cloud SDK [documentation](https://cloud.google.com/sdk/) to install and configure the `gcloud` command line utility.
+In this case above are VMs running in VirtualBox with a Bridge Network to the physical Router (TP-LINK 300Mbps Wireless Router). In the router settings, the DHCP has been configured to obtain static IP addresses.
+Which means if the mac address of the Virtual NICs of above VMs remains the same their IP address too will be same which are obtained from DHCP server of the router. One way or the other you need a static IP address for the above VMs or you should not restart/re-DHCP ( action which can potentially change the IP if it not static) the VMs during this setup. The entire set up is running on a custom-built, Windows 10 bare metal box with 32 GB ram and 8 core CPU (AMD FX(tm)-8300 Eight-Core Processor) with virtualization enabled and with a 1 TB SSD. The ethernet port of the motherboard is physically connected to the wifi router with an Ethernet cable, and the router WAN port is connected to the NBN access point ( Source of Internet ).
 
-Verify the Google Cloud SDK version is 262.0.0 or higher:
+All the VMs above are 1 VCPU and 1 GRAM with 60GB thin provisioned Virtual Disk.
 
-```
-gcloud version
-```
 
-### Set a Default Compute Region and Zone
-
-This tutorial assumes a default compute region and zone have been configured.
-
-If you are using the `gcloud` command-line tool for the first time `init` is the easiest way to do this:
-
-```
-gcloud init
-```
-
-Then be sure to authorize gcloud to access the Cloud Platform with your Google user credentials:
-
-```
-gcloud auth login
-```
-
-Next set a default compute region and compute zone:
-
-```
-gcloud config set compute/region us-west1
-```
-
-Set a default compute zone:
-
-```
-gcloud config set compute/zone us-west1-c
-```
-
-> Use the `gcloud compute zones list` command to view additional regions and zones.
 
 ## Running Commands in Parallel with tmux
 
