@@ -1,4 +1,8 @@
-# Kubernetes The Hard Way
+# Kubernetes The Hard Way on any cloud with docker and flannel as CNI
+
+This tutorial removes the dependancy of google cloud and related commands from the original hardway setup from Kelsey.
+So steps in this repo will work on AWS, Azure, GCP, bare metal, ESX, virtualbox, workstation and more. This assumes both the
+control plane and worker nodes are just linux machines which are route-able to each other and connected to internet. 
 
 This tutorial walks you through setting up Kubernetes the hard way. This guide is not for people looking for a fully automated command to bring up a Kubernetes cluster. If that's you then check out [Google Kubernetes Engine](https://cloud.google.com/kubernetes-engine), or the [Getting Started Guides](https://kubernetes.io/docs/setup).
 
